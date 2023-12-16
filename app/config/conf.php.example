@@ -1,0 +1,5 @@
+<?php
+$hashed_password = 'your_hashed_password_here'; // Replace with your hashed password
+$openai_api_key = 'your_openai_api_key_here'; // Replace with your OpenAI API key
+
+?>
