@@ -4,12 +4,16 @@ require_once('../app/security.php');
 
 <!DOCTYPE html>
 <html lang="en" class="h-full">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat App</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="rels/chat.css">
+    
 </head>
+
 <body class="bg-gray-100 h-full">
     <div class="flex flex-col h-full">
         <header class="text-xl text-center p-4 bg-white shadow-md">Chat Application</header>
@@ -43,28 +47,8 @@ require_once('../app/security.php');
 
     <!-- Include jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#sendMessage').click(function() {
-                var message = $('#messageInput').val();
-                var systemContent = $('#systemContentInput').val() || 'You are a helpful assistant.';
+    <script src="rels/chat.js"></script>
 
-                $.ajax({
-                    url: 'endpoint.php',
-                    type: 'POST',
-                    data: { 
-                        message: message,
-                        systemContent: systemContent
-                    },
-                    success: function(response) {
-                        $('#chatWindow').append('<div>' + response + '</div>');
-                        $('#messageInput').val('');
-                    }
-                });
-            });
-
-            // Additional JavaScript to load and manage chats
-        });
-    </script>
 </body>
+
 </html>

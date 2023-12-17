@@ -1,0 +1,26 @@
+/* chat.css */
+.chat-message {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end; /* Right align user messages */
+}
+
+.chat-message.ai {
+    justify-content: flex-start; /* Left align AI messages */
+}
+
+.chat-bubble {
+    padding: 10px 15px;
+    border-radius: 20px;
+    margin: 10px 0;
+    display: inline-block;
+    max-width: 70%;
+}
+
+.user-message {
+    background-color: #bfdbfe; /* light blue */
+}
+
+.ai-message {
+    background-color: #fecaca; /* light red */
+}
