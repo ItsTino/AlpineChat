@@ -28,14 +28,13 @@ function getAIResponse($message, $systemContent) {
     $url = 'https://api.endpoints.anyscale.com/v1/chat/completions';
 
     try {
-        // Check if a new conversation should be started
-        if (shouldStartNewConversation()) {
-            $conversationName = generateConversationName($message);
-            $conversationId = createConversation($conversationName);
-        } else {
-            $conversationId = getCurrentConversationId($pdo);
-        }
-        $conversationId = 2;
+        $conversationId = 2; // Hardcoded conversation ID
+
+        // Fetch chat history for the conversation
+        $chatHistory = getChatHistory($conversationId);
+
+        // Prepare the full message with history and current message
+        $fullMessage = $chatHistory . "[CURRENT_MESSAGE]User: " . $message . "[/CURRENT_MESSAGE]";
 
         $response = $client->request('POST', $url, [
             'headers' => [
@@ -44,14 +43,14 @@ function getAIResponse($message, $systemContent) {
             ],
             'json' => [
                 'model' => $ai_model,
+                // Update the structure according to the API's requirements to include $fullMessage
                 'messages' => [
                     ['role' => 'system', 'content' => $systemContent],
-                    ['role' => 'user', 'content' => $message]
+                    ['role' => 'user', 'content' => $fullMessage] // Sending full message
                 ],
                 'temperature' => 0.7
             ]
         ]);
-
 
         $responseBody = json_decode($response->getBody(), true);
         error_log("AI Response: " . json_encode($responseBody));
@@ -60,7 +59,6 @@ function getAIResponse($message, $systemContent) {
             $aiResponseContent = $responseBody['choices'][0]['message']['content'];
             $usage = $responseBody['usage'] ?? ['completion_tokens' => 0, 'prompt_tokens' => 0, 'total_tokens' => 0];
             
-           //storeMessage($conversationId, $ai_model, "success", $aiResponseContent, $systemContent, $message, $usage['completion_tokens'], $usage['prompt_tokens'], $usage['total_tokens']);
             storeMessage($conversationId, $ai_model, "success", $aiResponseContent, $message, $systemContent, $usage['completion_tokens'], $usage['prompt_tokens'], $usage['total_tokens']);
         }
 

@@ -52,8 +52,7 @@ function shouldStartNewConversation()
 {
     global $pdo;
 
-    // Implement your logic here. For example, checking the time since the last message.
-    // This is a placeholder example:
+    //Placeholder
     $stmt = $pdo->query("SELECT timestamp FROM messages ORDER BY timestamp DESC LIMIT 1");
     $lastMessage = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -61,4 +60,36 @@ function shouldStartNewConversation()
         return true;
     }
     return false;
+}
+
+function getAllConversations() {
+    global $pdo;
+    $stmt = $pdo->query("SELECT conversation_id, name FROM conversations");
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function getChatHistory($conversationId, $maxTokenCount = 4096) {
+    global $pdo;
+
+    // Fetch all messages for the conversation, ordered by newest first
+    $stmt = $pdo->prepare("SELECT content, user_message FROM messages WHERE conversation_id = :conversation_id ORDER BY timestamp DESC");
+    $stmt->execute([':conversation_id' => $conversationId]);
+    $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $concatenatedMessages = '';
+    $currentTokenCount = 0;
+    $averageCharsPerToken = 4; // Average characters per token (this is an approximation)
+
+    foreach ($messages as $message) {
+        $messageString = "User: " . $message['user_message'] . "\nAI: " . $message['content'] . "\n";
+        $messageTokenCount = intdiv(strlen($messageString), $averageCharsPerToken);
+
+        if ($currentTokenCount + $messageTokenCount <= $maxTokenCount) {
+            $concatenatedMessages = $messageString . $concatenatedMessages;
+            $currentTokenCount += $messageTokenCount;
+        } else {
+            break; // Stop if adding another message would exceed the max token count
+        }
+    }
+    return $concatenatedMessages;
 }
