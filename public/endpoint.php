@@ -18,13 +18,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method'])) {
             }
             break;
 
-
-            // Inside endpoint.php
         case 'getMessages':
             if (isset($_POST['conversationId'])) {
                 $messages = getMessages($_POST['conversationId']);
                 echo json_encode($messages); // Send back the messages as JSON
             }
+            break;
+        case 'getConversations':
+            echo json_encode(getAllConversations());
             break;
 
 
