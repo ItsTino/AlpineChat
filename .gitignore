@@ -2,3 +2,4 @@ app/conf.php
 app/config/conf.php
 vendor/
 .vscode/
+app/database/chat.db
