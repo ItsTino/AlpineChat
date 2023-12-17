@@ -3,3 +3,5 @@ app/config/conf.php
 vendor/
 .vscode/
 app/database/chat.db
+logs/error_log
+public/test.php
