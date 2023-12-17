@@ -1,26 +1,104 @@
 /* chat.css */
+body, html {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+header {
+    background-color: #ffffff;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
 .chat-message {
     width: 100%;
     display: flex;
-    justify-content: flex-end; /* Right align user messages */
+    margin-bottom: 10px;
 }
 
 .chat-message.ai {
-    justify-content: flex-start; /* Left align AI messages */
+    justify-content: flex-start;
 }
 
 .chat-bubble {
-    padding: 10px 15px;
-    border-radius: 20px;
-    margin: 10px 0;
+    padding: 12px 20px;
+    border-radius: 25px;
+    margin: 5px 10px;
     display: inline-block;
     max-width: 70%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    font-size: 0.9em;
 }
 
 .user-message {
-    background-color: #bfdbfe; /* light blue */
+    background-color: #bfdbfe;
+    color: #1a202c;
+    margin-left: auto;
 }
 
 .ai-message {
-    background-color: #fecaca; /* light red */
+    background-color: #fecaca;
+    color: #1a202c;
+    margin-right: auto;
 }
+
+#conversations .conversation-card {
+    background-color: #f7f7f7;
+    padding: 10px 15px;
+    border-radius: 15px;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#conversations .conversation-card:hover {
+    background-color: #e2e8f0;
+}
+
+#newConversation {
+    background-color: #4c51bf;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#newConversation:hover {
+    background-color: #434190;
+}
+
+/* ... Other styles ... */
+
+#sendMessage {
+    background-color: #4c51bf; /* Same as new conversation button */
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 0 8px 8px 0; /* Rounded only on the right */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#sendMessage:hover {
+    background-color: #434190;
+}
+
+#messageInput {
+    flex-grow: 1; /* Input field takes up remaining space */
+    border-radius: 8px 0 0 8px; /* Rounded only on the left */
+    resize: none; /* Prevent manual resizing */
+    overflow-y: auto; /* Allow vertical scrolling */
+    min-height: 38px; /* Minimum height for one line of text */
+    max-height: 114px; /* Maximum height for three lines of text */
+}
+
+/* Adjust flex container for input and button */
+.flex {
+    display: flex;
+}
+
+/* Add additional styling as needed */

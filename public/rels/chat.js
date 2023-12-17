@@ -1,9 +1,16 @@
 $(document).ready(function() {
     // Load messages when the page loads
     loadMessages();
+    loadConversations();
 
     // Refresh the chat window every 5 seconds
     setInterval(loadMessages, 5000);
+    setInterval(loadConversations, 5000);
+
+    $('#messageInput').on('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    });
 
     // Send message logic
     $('#sendMessage').click(function() {
@@ -66,4 +73,25 @@ function loadMessages() {
         // Placeholder implementation - adjust this based on your actual logic
         return 2; // Example: return the first conversation for now
     }
+
+    function loadConversations() {
+        $.ajax({
+            url: 'endpoint.php',
+            type: 'POST',
+            data: { method: 'getConversations' },
+            success: function(response) {
+                var conversations = JSON.parse(response);
+                $('#conversations').empty();
+                conversations.forEach(function(conversation) {
+                    $('#conversations').append(`
+                        <div class="conversation-card p-4 mb-2 bg-white rounded-lg shadow cursor-pointer hover:bg-gray-100" data-id="${conversation.conversation_id}">
+                            <h3 class="text-lg font-semibold">${conversation.name}</h3>
+                            <p class="text-sm text-gray-600">Click to view messages</p>
+                        </div>
+                    `);
+                });
+            }
+        });
+    }
+    
 });
