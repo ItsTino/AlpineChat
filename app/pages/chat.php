@@ -11,11 +11,25 @@
 
 <body class="bg-gray-100 h-full">
     <div class="flex flex-col h-full">
-        <header class="text-xl text-center p-4 bg-gray-800 text-white shadow-md">tokenChat</header>
+        <header class="bg-gray-800 text-white shadow-md">
+            <div class="text-center p-4">
+                <h1 class="text-2xl font-bold">AlpineChat</h1>
+                <p class="text-sm text-gray-300">powered by anyscale endpoints</p>
+            </div>
+        </header>
 
         <div class="flex flex-1 overflow-hidden">
             <!-- Left Sidebar for System Content and Conversation Management -->
             <div class="bg-white w-1/4 p-4 overflow-y-auto">
+                <!--Model Selector-->
+                <div class="mb-4">
+                    <label for="modelSelector" class="block text-sm font-medium text-gray-700">Select Model</label>
+                    <select id="modelSelector" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        <option value="Mixtral-8x7B-Instruct-v0.1">Mixtral-8x7B-Instruct-v0.1</option>
+                        <option value="Llama-2-70b-chat-hf">Llama-2-70b-chat-hf</option>
+                        <option value="CodeLlama-34b-Instruct-hf">CodeLlama-34b-Instruct-hf</option>
+                    </select>
+                </div>
                 <!-- System Content -->
                 <h2 class="font-bold text-lg">System Content</h2>
                 <input type="text" id="systemContentInput" class="border p-2 w-full rounded mb-4" placeholder="AI Prompt (e.g., 'You are a helpful assistant.')">
