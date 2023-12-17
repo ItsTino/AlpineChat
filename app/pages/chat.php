@@ -17,7 +17,7 @@
                 <p class="text-sm text-gray-300">powered by anyscale endpoints</p>
             </div>
         </header>
-
+        <div id="toast" class="hidden fixed bottom-10 right-10 bg-white rounded px-4 py-2 shadow-lg">Copied to clipboard!</div>
         <div class="flex flex-1 overflow-hidden">
             <!-- Left Sidebar for System Content and Conversation Management -->
             <div class="bg-white w-1/4 p-4 overflow-y-auto">

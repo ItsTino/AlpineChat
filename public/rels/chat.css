@@ -1,104 +1,127 @@
 /* chat.css */
-body, html {
-    font-family: 'Arial', sans-serif;
-    color: #333;
+body,
+html {
+  font-family: "Arial", sans-serif;
+  color: #333;
 }
 
 header {
-    background-color: #ffffff;
-    color: #333;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background-color: #ffffff;
+  color: #333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .chat-message {
-    width: 100%;
-    display: flex;
-    margin-bottom: 10px;
+  width: 100%;
+  display: flex;
+  margin-bottom: 10px;
 }
 
 .chat-message.ai {
-    justify-content: flex-start;
+  justify-content: flex-start;
 }
 
 .chat-bubble {
-    padding: 12px 20px;
-    border-radius: 25px;
-    margin: 5px 10px;
-    display: inline-block;
-    max-width: 70%;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-    font-size: 0.9em;
+  padding: 12px 20px;
+  border-radius: 25px;
+  margin: 5px 10px;
+  display: inline-block;
+  max-width: 70%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  font-size: 0.9em;
 }
 
 .user-message {
-    background-color: #bfdbfe;
-    color: #1a202c;
-    margin-left: auto;
+  background-color: #bfdbfe;
+  color: #1a202c;
+  margin-left: auto;
 }
 
 .ai-message {
-    background-color: #fecaca;
-    color: #1a202c;
-    margin-right: auto;
+  background-color: #fecaca;
+  color: #1a202c;
+  margin-right: auto;
 }
 
 #conversations .conversation-card {
-    background-color: #f7f7f7;
-    padding: 10px 15px;
-    border-radius: 15px;
-    margin-bottom: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    cursor: pointer;
-    transition: background-color 0.3s;
+  background-color: #f7f7f7;
+  padding: 10px 15px;
+  border-radius: 15px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 #conversations .conversation-card:hover {
-    background-color: #e2e8f0;
+  background-color: #e2e8f0;
 }
 
 #newConversation {
-    background-color: #4c51bf;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 8px;
-    margin-top: 15px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  background-color: #4c51bf;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-top: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 #newConversation:hover {
-    background-color: #434190;
+  background-color: #434190;
 }
 
 /* ... Other styles ... */
 
 #sendMessage {
-    background-color: #4c51bf; /* Same as new conversation button */
-    border: none;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 0 8px 8px 0; /* Rounded only on the right */
-    cursor: pointer;
-    transition: background-color 0.3s;
+  background-color: #4c51bf; /* Same as new conversation button */
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 0 8px 8px 0; /* Rounded only on the right */
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 #sendMessage:hover {
-    background-color: #434190;
+  background-color: #434190;
 }
 
 #messageInput {
-    flex-grow: 1; /* Input field takes up remaining space */
-    border-radius: 8px 0 0 8px; /* Rounded only on the left */
-    resize: none; /* Prevent manual resizing */
-    overflow-y: auto; /* Allow vertical scrolling */
-    min-height: 38px; /* Minimum height for one line of text */
-    max-height: 114px; /* Maximum height for three lines of text */
+  flex-grow: 1; /* Input field takes up remaining space */
+  border-radius: 8px 0 0 8px; /* Rounded only on the left */
+  resize: none; /* Prevent manual resizing */
+  overflow-y: auto; /* Allow vertical scrolling */
+  min-height: 38px; /* Minimum height for one line of text */
+  max-height: 114px; /* Maximum height for three lines of text */
 }
 
 /* Adjust flex container for input and button */
 .flex {
-    display: flex;
+  display: flex;
+}
+
+#toast {
+  background-color: #f8f8f8;
+  color: #333;
+  border: 1px solid #ddd;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.code-block {
+  background-color: #f5f5f5; /* Light background for code */
+  color: #2d2d2d; /* Darker text color for readability */
+  border-radius: 8px;
+  padding: 8px;
+  overflow-x: auto; /* Enable horizontal scrolling for long lines */
+  font-family: 'Courier New', monospace; /* Monospaced font for code */
+  white-space: pre; /* Preserve formatting */
 }
 
 /* Add additional styling as needed */
