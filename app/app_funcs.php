@@ -1,6 +1,6 @@
 <?php
-require 'config/conf.php'; // Include configuration file
-require 'db.php';   // Include db.php for database functions
+require_once 'config/conf.php'; // Include configuration file
+require_once 'db.php';   // Include db.php for database functions
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 

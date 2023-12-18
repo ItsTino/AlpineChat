@@ -1,6 +1,6 @@
 <?php
-require '../vendor/autoload.php';
-include '../app/app_funcs.php';
+require_once '../vendor/autoload.php';
+include_once '../app/app_funcs.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method'])) {
@@ -34,6 +34,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method'])) {
             echo json_encode(['conversation_id' => $newConversationId]);
             break;
 
+            case 'logout':
+                // Unset all session variables
+                $_SESSION = [];
+                // Destroy the session
+                session_destroy(); 
+                break;
+        
 
         default:
             echo 'Invalid method';
