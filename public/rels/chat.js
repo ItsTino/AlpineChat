@@ -59,6 +59,7 @@ $(document).ready(function () {
       $("#systemContentInput").val() || "You are a helpful assistant.";
 
     $("#messageInput").val("");
+    showLoadingBubble(); // Show the loading bubble
 
     let requestData = {
       method: "sendMessage",
@@ -76,6 +77,7 @@ $(document).ready(function () {
 
       success: function (response) {
         // Append the sent message and AI response to the chat window
+        $(".ai-message").last().parent().remove(); // Remove the loading bubble
         $("#chatWindow").append("<div>You: " + message + "</div>");
         $("#chatWindow").append("<div>AI: " + response + "</div>");
       },
@@ -100,10 +102,10 @@ $(document).ready(function () {
           if (message.user_message) {
             $("#chatWindow").append(
               '<div class="chat-message"><div class="chat-bubble user-message" data-content="' +
-              message.user_message +
-              '">' +
-              message.user_message +
-              "</div></div>"
+                message.user_message +
+                '">' +
+                message.user_message +
+                "</div></div>"
             );
           }
 
@@ -112,10 +114,10 @@ $(document).ready(function () {
             var formattedContent = formatCodeInMessage(message.content);
             $("#chatWindow").append(
               '<div class="chat-message"><div class="chat-bubble ai-message" data-content="' +
-              message.content +
-              '">' +
-              formattedContent +
-              "</div></div>"
+                message.content +
+                '">' +
+                formattedContent +
+                "</div></div>"
             );
           }
         });
@@ -129,6 +131,16 @@ $(document).ready(function () {
     $('.conversation-card[data-id="' + conversationId + '"]').addClass(
       "active-conversation"
     );
+  }
+
+  function showLoadingBubble() {
+    var loadingBubbleHtml = `
+      <div class="chat-message">
+        <div class="chat-bubble ai-message typing-indicator">
+          <span></span><span></span><span></span>
+        </div>
+      </div>`;
+    $("#chatWindow").append(loadingBubbleHtml);
   }
 
   // Function to format code in message
