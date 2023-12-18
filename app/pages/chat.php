@@ -14,16 +14,16 @@
         <header class="bg-gray-800 text-white shadow-md">
             <div class="text-center p-4">
                 <h1 class="text-2xl font-bold">AlpineChat</h1>
-                <p class="text-sm text-gray-300">powered by anyscale endpoints</p>
+                <p class="text-sm text-gray-300">powered by <span class="italic">anyscale endpoints</span></p>
             </div>
         </header>
         <div id="toast" class="hidden fixed bottom-10 right-10 bg-white rounded px-4 py-2 shadow-lg">Copied to clipboard!</div>
         <div class="flex flex-1 overflow-hidden">
             <!-- Left Sidebar for System Content and Conversation Management -->
-            <div class="bg-white w-1/4 p-4 overflow-y-auto">
+            <div class="bg-gray-800 w-1/4 p-4 overflow-y-auto">
                 <!--Model Selector-->
                 <div class="mb-4">
-                    <label for="modelSelector" class="block text-sm font-medium text-gray-700">Select Model</label>
+                    <label for="modelSelector" class="block text-sm font-medium text-white">Select Model</label>
                     <select id="modelSelector" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                         <option value="Mixtral-8x7B-Instruct-v0.1">Mixtral-8x7B-Instruct-v0.1</option>
                         <option value="Llama-2-70b-chat-hf">Llama-2-70b-chat-hf</option>
@@ -31,11 +31,11 @@
                     </select>
                 </div>
                 <!-- System Content -->
-                <h2 class="font-bold text-lg">System Content</h2>
+                <h2 class="font-bold text-lg text-white">System Content</h2>
                 <input type="text" id="systemContentInput" class="border p-2 w-full rounded mb-4" placeholder="AI Prompt (e.g., 'You are a helpful assistant.')">
 
                 <!-- Conversations -->
-                <h2 class="font-bold text-lg mb-4">Conversations</h2>
+                <h2 class="font-bold text-lg mb-4 text-white">Conversations</h2>
                 <div id="conversations" class="mb-4">
                     <!-- Conversations will appear here -->
                 </div>

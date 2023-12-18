@@ -1,11 +1,19 @@
 $(document).ready(function () {
-  // Load messages when the page loads
+  var conversationId; // Global conversation ID variable
+
+  // Load messages and conversations when the page loads
   loadMessages();
   loadConversations();
 
   // Refresh the chat window every 5 seconds
   setInterval(loadMessages, 5000);
   setInterval(loadConversations, 5000);
+
+  // Conversation selection
+  $(document).on("click", ".conversation-card", function () {
+    conversationId = $(this).data("id");
+    loadMessages();
+  });
 
   $("#messageInput").on("input", function () {
     this.style.height = "auto";
@@ -24,28 +32,30 @@ $(document).ready(function () {
     });
   });
 
-  // Send message logic
+  // Sending a new message
   $("#sendMessage").click(function () {
     var message = $("#messageInput").val();
     var systemContent =
       $("#systemContentInput").val() || "You are a helpful assistant.";
-    var currentConversationId = getCurrentConversationId(); //Fetch current conversation ID //Forced 2
 
-    // Clear the input field
     $("#messageInput").val("");
 
-    // Send the message to the server
+    let requestData = {
+      method: "sendMessage",
+      message: message,
+      systemContent: systemContent,
+    };
+    if (conversationId) {
+      requestData.conversationId = conversationId;
+    }
+
     $.ajax({
       url: "endpoint.php",
       type: "POST",
-      data: {
-        method: "sendMessage",
-        message: message,
-        systemContent: systemContent,
-        conversationId: currentConversationId, // Include the conversation ID
-      },
+      data: requestData,
+
       success: function (response) {
-        // Display the sent message and the AI response
+        // Append the sent message and AI response to the chat window
         $("#chatWindow").append("<div>You: " + message + "</div>");
         $("#chatWindow").append("<div>AI: " + response + "</div>");
       },
@@ -54,14 +64,12 @@ $(document).ready(function () {
 
   // Function to load and display messages
   function loadMessages() {
-    var currentConversationId = getCurrentConversationId();
-
     $.ajax({
       url: "endpoint.php",
       type: "POST",
       data: {
         method: "getMessages",
-        conversationId: currentConversationId,
+        conversationId: conversationId,
       },
       success: function (response) {
         var messages = JSON.parse(response);
@@ -99,15 +107,9 @@ $(document).ready(function () {
   function formatCodeInMessage(content) {
     // Using regex to detect and format code blocks enclosed in triple backticks
     return content.replace(/```(.*?)```/gs, '<pre class="code-block">$1</pre>');
-}
-
-
-  // Function to get the current conversation ID
-  function getCurrentConversationId() {
-    // Placeholder implementation - adjust this based on your actual logic
-    return 2; // Example: return the first conversation for now
   }
 
+  // Function to load and display conversations
   function loadConversations() {
     $.ajax({
       url: "endpoint.php",
@@ -116,15 +118,36 @@ $(document).ready(function () {
       success: function (response) {
         var conversations = JSON.parse(response);
         $("#conversations").empty();
+
         conversations.forEach(function (conversation) {
+          var isActive = conversationId == conversation.conversation_id;
+          var activeClass = isActive ? "active-conversation" : "";
           $("#conversations").append(`
-                        <div class="conversation-card p-4 mb-2 bg-white rounded-lg shadow cursor-pointer hover:bg-gray-100" data-id="${conversation.conversation_id}">
-                            <h3 class="text-lg font-semibold">${conversation.name}</h3>
-                            <p class="text-sm text-gray-600">Click to view messages</p>
-                        </div>
-                    `);
+                      <div class="conversation-card p-4 mb-2 bg-white rounded-lg shadow cursor-pointer hover:bg-gray-100 ${activeClass}" data-id="${conversation.conversation_id}">
+                          <h3 class="text-lg font-semibold">${conversation.name}</h3>
+                          <p class="text-sm text-gray-600">Click to view messages</p>
+                      </div>
+                  `);
         });
       },
     });
   }
+
+  // Create new conversation
+  $("#newConversation").click(function () {
+    $.ajax({
+      url: "endpoint.php",
+      type: "POST",
+      data: { method: "createNewConversation" },
+      success: function (response) {
+        var newConversationId = JSON.parse(response).conversation_id;
+        conversationId = newConversationId;
+        loadConversations();
+        loadMessages();
+      },
+      error: function () {
+        alert("Error creating conversation");
+      },
+    });
+  });
 });

@@ -93,3 +93,21 @@ function getChatHistory($conversationId, $maxTokenCount = 4096) {
     }
     return $concatenatedMessages;
 }
+
+function getCurrentOrNewConversationId() {
+    global $pdo;
+
+    // Check for the most recent conversation
+    $stmt = $pdo->query("SELECT conversation_id FROM messages ORDER BY timestamp DESC LIMIT 1");
+    $lastConversation = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($lastConversation) {
+        return $lastConversation['conversation_id'];
+    } else {
+        // Create a new conversation
+        $newConversationName = "New Conversation"; // Customize the name as needed
+        return createConversation($newConversationName);
+    }
+}
+
+

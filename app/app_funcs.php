@@ -21,20 +21,22 @@ function getAppCurrentConversationId() {
     //return getCurrentConversationId();
 }
 
-function getAIResponse($message, $systemContent) {
-    global $anyscale_api_key, $ai_model, $pdo;
+function getAIResponse($message, $systemContent, $conversationId = null) {
+    global $anyscale_api_key, $ai_model;
+
+    if (is_null($conversationId)) {
+        $conversationId = getCurrentOrNewConversationId();
+    }
 
     $client = new Client();
     $url = 'https://api.endpoints.anyscale.com/v1/chat/completions';
 
     try {
-        $conversationId = 2; // Hardcoded conversation ID
-
         // Fetch chat history for the conversation
         $chatHistory = getChatHistory($conversationId);
 
         // Prepare the full message with history and current message
-        $fullMessage = $chatHistory . "[CURRENT_MESSAGE]User: " . $message . "[/CURRENT_MESSAGE]";
+        $fullMessage = "[HISTORY]" . $chatHistory . "[/HISTORY][CURRENT_MESSAGE]User: " . $message . "[/CURRENT_MESSAGE]";
 
         $response = $client->request('POST', $url, [
             'headers' => [
@@ -43,7 +45,6 @@ function getAIResponse($message, $systemContent) {
             ],
             'json' => [
                 'model' => $ai_model,
-                // Update the structure according to the API's requirements to include $fullMessage
                 'messages' => [
                     ['role' => 'system', 'content' => $systemContent],
                     ['role' => 'user', 'content' => $fullMessage] // Sending full message
@@ -69,16 +70,10 @@ function getAIResponse($message, $systemContent) {
     }
 }
 
+
 function generateConversationName($message) {
     // Implement the AI call here to generate a conversation name based on $message
     // For now, returning a placeholder name based on the message content
     return "Conversation: " . substr($message, 0, 30);
 }
 
-function getCurrentConversationId($pdo) {
-    // Example implementation: Get the ID of the most recent conversation
-    $stmt = $pdo->query("SELECT conversation_id FROM messages ORDER BY timestamp DESC LIMIT 1");
-    $lastConversation = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    return $lastConversation ? $lastConversation['conversation_id'] : null;
-}

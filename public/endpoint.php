@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method'])) {
 
         case 'sendMessage':
             if (isset($_POST['message'], $_POST['systemContent'])) {
-                $aiResponse = getAIResponse($_POST['message'], $_POST['systemContent']);
+                $aiResponse = getAIResponse($_POST['message'], $_POST['systemContent'], $_POST['conversationId']);
                 echo isset($aiResponse['choices'][0]['message']['content']) ? $aiResponse['choices'][0]['message']['content'] : 'Error processing request';
             }
             break;
@@ -26,6 +26,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method'])) {
             break;
         case 'getConversations':
             echo json_encode(getAllConversations());
+            break;
+
+        case 'createNewConversation':
+            $newConversationName = generateConversationName("New Conversation"); // Custom logic to generate a conversation name
+            $newConversationId = createConversation($newConversationName);
+            echo json_encode(['conversation_id' => $newConversationId]);
             break;
 
 
