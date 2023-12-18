@@ -57,7 +57,8 @@ header {
   background-color: #e2e8f0;
 }
 
-#newConversation {
+#newConversation,
+#logoutButton {
   background-color: #4c51bf;
   color: white;
   border: none;
@@ -68,18 +69,17 @@ header {
   transition: background-color 0.3s;
 }
 
-#newConversation:hover {
+#newConversation:hover,
+#logoutButton:hover {
   background-color: #434190;
 }
 
-/* ... Other styles ... */
-
 #sendMessage {
-  background-color: #4c51bf; /* Same as new conversation button */
+  background-color: #4c51bf;
   border: none;
   color: white;
   padding: 10px 15px;
-  border-radius: 0 8px 8px 0; /* Rounded only on the right */
+  border-radius: 0 8px 8px 0;
   cursor: pointer;
   transition: background-color 0.3s;
 }
@@ -89,15 +89,14 @@ header {
 }
 
 #messageInput {
-  flex-grow: 1; /* Input field takes up remaining space */
-  border-radius: 8px 0 0 8px; /* Rounded only on the left */
-  resize: none; /* Prevent manual resizing */
-  overflow-y: auto; /* Allow vertical scrolling */
-  min-height: 38px; /* Minimum height for one line of text */
-  max-height: 114px; /* Maximum height for three lines of text */
+  flex-grow: 1;
+  border-radius: 8px 0 0 8px;
+  resize: none;
+  overflow-y: auto;
+  min-height: 38px;
+  max-height: 114px;
 }
 
-/* Adjust flex container for input and button */
 .flex {
   display: flex;
 }
@@ -115,13 +114,74 @@ header {
 }
 
 .code-block {
-  background-color: #f5f5f5; /* Light background for code */
-  color: #2d2d2d; /* Darker text color for readability */
+  background-color: #f5f5f5;
+  color: #2d2d2d;
   border-radius: 8px;
   padding: 8px;
-  overflow-x: auto; /* Enable horizontal scrolling for long lines */
-  font-family: 'Courier New', monospace; /* Monospaced font for code */
-  white-space: pre; /* Preserve formatting */
+  overflow-x: auto;
+  font-family: "Courier New", monospace;
+  white-space: pre;
 }
 
-/* Add additional styling as needed */
+@media (max-width: 768px) {
+  /* Adjust sidebar for mobile */
+  #sidebar {
+    overflow-y: auto;
+    max-height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  #sidebar.show {
+    transform: translateX(0);
+  }
+
+  /* Style the chat window for mobile */
+  #chatWindow {
+    flex-grow: 1;
+    max-height: 80vh; /* Adjust the height as needed */
+    overflow-y: auto;
+  }
+
+  /* Fixed input section at the bottom */
+  .flex {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 15;
+    padding: 10px;
+  }
+
+  #messageInput {
+    flex-grow: 1;
+    margin-right: 10px;
+  }
+
+  #sendMessage {
+    flex-shrink: 0;
+  }
+
+  /* Toggle sidebar button */
+  #toggleSidebar {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    padding: 0.5em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 30; /* Ensure it's above all other elements */
+    position: fixed;
+    top: 10px;
+    right: 10px;
+  }
+
+  #toggleSidebar:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+}

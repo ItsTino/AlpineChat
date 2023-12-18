@@ -13,6 +13,26 @@ $(document).ready(function () {
   $(document).on("click", ".conversation-card", function () {
     conversationId = $(this).data("id");
     loadMessages();
+    toggleSidebar();
+  });
+
+  $("#toggleSidebar").click(function () {
+    toggleSidebar();
+  });
+
+  function toggleSidebar() {
+    $("#sidebar").toggleClass("show");
+  }
+
+  $("#logoutButton").click(function () {
+    $.ajax({
+      url: "endpoint.php",
+      type: "POST",
+      data: { method: "logout" },
+      success: function () {
+        document.location.reload(true); // Redirect to login page after logout
+      },
+    });
   });
 
   $("#messageInput").on("input", function () {
@@ -80,10 +100,10 @@ $(document).ready(function () {
           if (message.user_message) {
             $("#chatWindow").append(
               '<div class="chat-message"><div class="chat-bubble user-message" data-content="' +
-                message.user_message +
-                '">' +
-                message.user_message +
-                "</div></div>"
+              message.user_message +
+              '">' +
+              message.user_message +
+              "</div></div>"
             );
           }
 
@@ -92,10 +112,10 @@ $(document).ready(function () {
             var formattedContent = formatCodeInMessage(message.content);
             $("#chatWindow").append(
               '<div class="chat-message"><div class="chat-bubble ai-message" data-content="' +
-                message.content +
-                '">' +
-                formattedContent +
-                "</div></div>"
+              message.content +
+              '">' +
+              formattedContent +
+              "</div></div>"
             );
           }
         });
@@ -137,7 +157,7 @@ $(document).ready(function () {
           var isActive = conversationId == conversation.conversation_id;
           var activeClass = isActive ? "active-conversation" : "";
           $("#conversations").append(`
-                    <div class="conversation-card p-4 mb-2 bg-white rounded-lg shadow cursor-pointer hover:bg-gray-100 ${activeClass}" data-id="${conversation.conversation_id}">
+                    <div class="conversation-card p-4 mb-2 bg-gray rounded-lg shadow cursor-pointer hover:bg-gray-100 ${activeClass}" data-id="${conversation.conversation_id}">
                         <h3 class="text-lg font-semibold">${conversation.name}</h3>
                         <p class="text-sm text-gray-600">Click to view messages</p>
                     </div>
