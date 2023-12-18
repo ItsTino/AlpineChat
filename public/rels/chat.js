@@ -99,8 +99,16 @@ $(document).ready(function () {
             );
           }
         });
+        highlightActiveConversation(conversationId);
       },
     });
+  }
+
+  function highlightActiveConversation(conversationId) {
+    $(".conversation-card").removeClass("active-conversation");
+    $('.conversation-card[data-id="' + conversationId + '"]').addClass(
+      "active-conversation"
+    );
   }
 
   // Function to format code in message
@@ -119,16 +127,25 @@ $(document).ready(function () {
         var conversations = JSON.parse(response);
         $("#conversations").empty();
 
+        if (conversations.length > 0 && !conversationId) {
+          // Set the global conversationId to the first conversation's ID
+          conversationId = conversations[0].conversation_id;
+          loadMessages(); // Load messages for the first conversation
+        }
+
         conversations.forEach(function (conversation) {
           var isActive = conversationId == conversation.conversation_id;
           var activeClass = isActive ? "active-conversation" : "";
           $("#conversations").append(`
-                      <div class="conversation-card p-4 mb-2 bg-white rounded-lg shadow cursor-pointer hover:bg-gray-100 ${activeClass}" data-id="${conversation.conversation_id}">
-                          <h3 class="text-lg font-semibold">${conversation.name}</h3>
-                          <p class="text-sm text-gray-600">Click to view messages</p>
-                      </div>
-                  `);
+                    <div class="conversation-card p-4 mb-2 bg-white rounded-lg shadow cursor-pointer hover:bg-gray-100 ${activeClass}" data-id="${conversation.conversation_id}">
+                        <h3 class="text-lg font-semibold">${conversation.name}</h3>
+                        <p class="text-sm text-gray-600">Click to view messages</p>
+                    </div>
+                `);
         });
+      },
+      error: function (error) {
+        console.error("Error loading conversations: ", error);
       },
     });
   }

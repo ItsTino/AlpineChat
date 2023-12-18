@@ -11,16 +11,15 @@
 
 <body class="bg-gray-100 h-full">
     <div class="flex flex-col h-full">
-        <header class="bg-gray-800 text-white shadow-md">
-            <div class="text-center p-4">
-                <h1 class="text-2xl font-bold">AlpineChat</h1>
-                <p class="text-sm text-gray-300">powered by <span class="italic">anyscale endpoints</span></p>
-            </div>
-        </header>
         <div id="toast" class="hidden fixed bottom-10 right-10 bg-white rounded px-4 py-2 shadow-lg">Copied to clipboard!</div>
         <div class="flex flex-1 overflow-hidden">
+
             <!-- Left Sidebar for System Content and Conversation Management -->
             <div class="bg-gray-800 w-1/4 p-4 overflow-y-auto">
+                <div class="text-center p-4">
+                    <h1 class="text-2xl font-bold text-white">AlpineChat</h1>
+                    <p class="text-sm text-gray-300">powered by <span class="italic">anyscale endpoints</span></p>
+                </div>
                 <!--Model Selector-->
                 <div class="mb-4">
                     <label for="modelSelector" class="block text-sm font-medium text-white">Select Model</label>
