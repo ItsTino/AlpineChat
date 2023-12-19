@@ -16,6 +16,25 @@ $(document).ready(function () {
     toggleSidebar();
   });
 
+  $(document).on("click", ".delete-conversation", function (e) {
+    e.stopPropagation(); // Prevent triggering the conversation-card click event
+    var conversationId = $(this).parent().data("id");
+    $.ajax({
+      url: "endpoint.php",
+      type: "POST",
+      data: {
+        method: "deleteConversation",
+        conversationId: conversationId
+      },
+      success: function () {
+        loadConversations();
+      },
+      error: function () {
+        alert("Error deleting conversation");
+      }
+    });
+  });
+
   $("#toggleSidebar").click(function () {
     toggleSidebar();
   });
@@ -102,10 +121,10 @@ $(document).ready(function () {
           if (message.user_message) {
             $("#chatWindow").append(
               '<div class="chat-message"><div class="chat-bubble user-message" data-content="' +
-                message.user_message +
-                '">' +
-                message.user_message +
-                "</div></div>"
+              message.user_message +
+              '">' +
+              message.user_message +
+              "</div></div>"
             );
           }
 
@@ -114,10 +133,10 @@ $(document).ready(function () {
             var formattedContent = formatCodeInMessage(message.content);
             $("#chatWindow").append(
               '<div class="chat-message"><div class="chat-bubble ai-message" data-content="' +
-                message.content +
-                '">' +
-                formattedContent +
-                "</div></div>"
+              message.content +
+              '">' +
+              formattedContent +
+              "</div></div>"
             );
           }
         });
@@ -169,10 +188,11 @@ $(document).ready(function () {
           var isActive = conversationId == conversation.conversation_id;
           var activeClass = isActive ? "active-conversation" : "";
           $("#conversations").append(`
-                    <div class="conversation-card p-4 mb-2 bg-gray rounded-lg shadow cursor-pointer hover:bg-gray-100 ${activeClass}" data-id="${conversation.conversation_id}">
-                        <h3 class="text-lg font-semibold">${conversation.name}</h3>
-                        <p class="text-sm text-gray-600">Click to view messages</p>
-                    </div>
+          <div class="conversation-card p-4 mb-2 bg-gray rounded-lg shadow cursor-pointer hover:bg-gray-100 ${activeClass}" data-id="${conversation.conversation_id}">
+          <h3 class="text-lg font-semibold">${conversation.name}</h3>
+          <p class="text-sm text-gray-600">Click to view messages</p>
+          <button class="delete-conversation">Delete</button> <!-- Add this line -->
+          </div>
                 `);
         });
       },

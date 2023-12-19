@@ -34,13 +34,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method'])) {
             echo json_encode(['conversation_id' => $newConversationId]);
             break;
 
-            case 'logout':
-                // Unset all session variables
-                $_SESSION = [];
-                // Destroy the session
-                session_destroy(); 
-                break;
-        
+        case 'logout':
+            // Unset all session variables
+            $_SESSION = [];
+            // Destroy the session
+            session_destroy();
+            break;
+
+        case 'deleteConversation':
+            if (isset($_POST['conversationId'])) {
+                deleteConversation($_POST['conversationId']);
+            }
+            break;
+
 
         default:
             echo 'Invalid method';

@@ -94,6 +94,12 @@ function getChatHistory($conversationId, $maxTokenCount = 4096) {
     return $concatenatedMessages;
 }
 
+function deleteConversation($conversationId) {
+    global $pdo;
+    $stmt = $pdo->prepare("DELETE FROM conversations WHERE conversation_id = :conversationId");
+    $stmt->execute([':conversationId' => $conversationId]);
+}
+
 function getCurrentOrNewConversationId() {
     global $pdo;
 
