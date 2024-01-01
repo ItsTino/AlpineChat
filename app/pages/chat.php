@@ -49,7 +49,8 @@
             </div>
 
             <!-- Chat Window -->
-            <div class="flex flex-col w-full md:w-3/4 p-4 bg-white overflow-hidden">
+
+            <div class="flex flex-col w-full p-4 bg-white overflow-hidden ">
                 <div id="chatWindow" class="flex-1 overflow-y-auto">
                     <!-- Messages will appear here -->
                 </div>
