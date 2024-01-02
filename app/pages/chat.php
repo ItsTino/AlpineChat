@@ -26,15 +26,7 @@
                     <h1 class="text-2xl font-bold text-white">AlpineChat</h1>
                     <p class="text-sm text-gray-300">powered by <span class="italic text-white">anyscale endpoints</span></p>
                 </div>
-                <!--Model Selector-->
-                <div class="mb-4">
-                    <label for="modelSelector" class="block text-sm font-medium text-white">Select Model</label>
-                    <select id="modelSelector" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                        <option value="Mixtral-8x7B-Instruct-v0.1">Mixtral-8x7B-Instruct-v0.1</option>
-                        <option value="Llama-2-70b-chat-hf">Llama-2-70b-chat-hf</option>
-                        <option value="CodeLlama-34b-Instruct-hf">CodeLlama-34b-Instruct-hf</option>
-                    </select>
-                </div>
+
                 <!-- System Content -->
                 <h2 class="font-bold text-lg text-white">System Content</h2>
                 <input type="text" id="systemContentInput" class="border p-2 w-full rounded mb-4" placeholder="AI Prompt (e.g., 'You are a helpful assistant.')">
